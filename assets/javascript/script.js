@@ -1,4 +1,5 @@
 // Assignment code here
+// complexityTypes collects complexity types with lower case as an included default
 var complexityTypes = [1];
 var numberOfChar = 0
 var alphabet = ['a', 'b', 'c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
@@ -8,10 +9,9 @@ var numberChar = ['0','1','2','3','4','5','6','7','8','9'];
 var charUpper = true;
 var charNum = true;
 var charSpecial = true;
-var passwordBucket ="";
 var password = "";
 
-// *** Set complexity
+// Master function
 var generatePassword = function() {
   numberOfCharF();
   psComplexity();
@@ -22,6 +22,7 @@ var generatePassword = function() {
 var numberOfCharF = function () {
   var pwChars = prompt("How long would you like your password to be? Enter any number from 8 to 128.");
 
+  // Verifies that characters are within the acceptable range and sets # of characters
   if (pwChars < 8 || pwChars > 128) {
     alert("You must select a number between 8 and 128");
     numberOfCharF();
@@ -33,10 +34,12 @@ var numberOfCharF = function () {
 
 // Identifies which  complexity factors are desired.
 var psComplexity = function() {
+  // Prompt user to identify what complexity factors will be included.  Lower case is included by default.
   charUpper = confirm("Would you like to include uppercase characters?");
   charNum = confirm("Would you like to include numeric characters?");
   charSpecial = confirm("Would you like to include special characters?");
 
+  // Identifies complexity types and pushes to array
   if (charUpper) {
     complexityTypes.push(2);
   }
@@ -48,55 +51,52 @@ var psComplexity = function() {
   }
 }
 
+// Creates the password based upon the outputs from numberOfCharF and psComplexity functions
 var createPassword = function() {
+  // pwCharEL is an array used to collect each generated charcter
   pwCharEL = [];
-  console.log("numberOfChar in create loop"+ numberOfChar);
+  // TESTING console.log("numberOfChar in create loop"+ numberOfChar);
+
   var passwordText = document.querySelector("#password");
+
   for (i = 0; i < numberOfChar; i++) {
     random = Math.floor(Math.random() * complexityTypes.length);
     randomSelector = complexityTypes[random];
-    console.log("random " + random);
-    console.log("randomSelector " + randomSelector);
+    //TESTING console.log("random " + random);
+    //TESTING console.log("randomSelector " + randomSelector);
+
+    // Iterates through complexity types, generates character, and adds to collection array.
     if (randomSelector === 1 ) {
       randomArr = (Math.floor(Math.random() * alphabet.length));
       lowerPwEl = alphabet[randomArr];
       pwCharEL.push(lowerPwEl);
-      console.log(lowerPwEl);
+      //TESTING console.log(lowerPwEl);
     } else if (randomSelector === 2) {
       randomArr = (Math.floor(Math.random() * alphabetUpper.length));
       upperPwEl = alphabetUpper[randomArr];
       pwCharEL.push(upperPwEl);
-      console.log(upperPwEl);
+      //TESTING console.log(upperPwEl);
     } else if (randomSelector === 3) {
       randomArr = (Math.floor(Math.random() * numberChar.length));
       numberPwEl = numberChar[randomArr];
       pwCharEL.push(numberPwEl);
-      console.log(numberPwEl);
+      //TESTING console.log(numberPwEl);
     } else if (randomSelector === 4) {
       randomArr = (Math.floor(Math.random() * specialChar.length));
       specialPwEl = specialChar[randomArr];
-      console.log(specialPwEl);
+      //TESTING console.log(specialPwEl);
       pwCharEL.push(specialPwEl);
     }
-    console.log(pwCharEL);
+    // Convert password array to string with no spaces or commas
     password=pwCharEL.join('');
-    console.log(password);
+    //TESTING console.log(password);
   }
+  // Pass final password to html object for display
   passwordText.value = password;
 }
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
-/*
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-}*/
-
 // Add event listener to generate button
-//generateBtn.addEventListener("click", writePassword);
 generateBtn.addEventListener("click", generatePassword);
