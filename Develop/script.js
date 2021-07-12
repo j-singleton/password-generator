@@ -8,6 +8,7 @@ var numberChar = ['0','1','2','3','4','5','6','7','8','9'];
 var charUpper = true;
 var charNum = true;
 var charSpecial = true;
+var passwordBucket ="";
 var password = "";
 
 // *** Set complexity
@@ -50,6 +51,7 @@ var psComplexity = function() {
 var createPassword = function() {
   pwCharEL = [];
   console.log("numberOfChar in create loop"+ numberOfChar);
+  var passwordText = document.querySelector("#password");
   for (i = 0; i < numberOfChar; i++) {
     random = Math.floor(Math.random() * complexityTypes.length);
     randomSelector = complexityTypes[random];
@@ -80,20 +82,21 @@ var createPassword = function() {
     password=pwCharEL.join('');
     console.log(password);
   }
-
+  passwordText.value = password;
 }
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
+/*
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
-}
+}*/
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+//generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", generatePassword);
